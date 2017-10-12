@@ -68,28 +68,31 @@ public class FlagsActivity extends SimpleActivity {
         img.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //Toast.makeText(FlagsActivity.this, "You clicked " + countryName, Toast.LENGTH_SHORT).show();
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(FlagsActivity.this);
-                builder.setTitle("My Dialog");
-                builder.setMessage("You clicked " + countryName);
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        //code to run when OK is pressed
-                        Toast.makeText(FlagsActivity.this, "You clicked OK", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
+                doTheDialog(countryName);
             }
         });
 
         layout.addView(flag);
 
+    }
+
+    private void doTheDialog(String countryName){
+        //Toast.makeText(FlagsActivity.this, "You clicked " + countryName, Toast.LENGTH_SHORT).show();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(FlagsActivity.this);
+        builder.setTitle("My Dialog");
+        builder.setMessage("You clicked " + countryName);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                //code to run when OK is pressed
+                Toast.makeText(FlagsActivity.this, "You clicked OK", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

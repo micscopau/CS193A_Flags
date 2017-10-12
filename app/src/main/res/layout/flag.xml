@@ -7,9 +7,10 @@
     android:layout_height="wrap_content"
     >
 
-    <ImageView
+    <ImageButton
         android:id="@+id/flag_image"
-        android:src="@drawable/japan"
+        android:background="@drawable/japan"
+        android:scaleType="fitCenter"
         android:layout_width="75sp"
         android:layout_height="75sp" />
 

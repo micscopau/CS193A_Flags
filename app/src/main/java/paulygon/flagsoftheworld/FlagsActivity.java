@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FlagsActivity extends AppCompatActivity {
     private static final String[] COUNTRIES = {
@@ -66,7 +68,7 @@ public class FlagsActivity extends AppCompatActivity {
     }
 
     //countryName = "USA"
-    private void addFlag(String countryName, GridLayout layout){
+    private void addFlag(final String countryName, GridLayout layout){
 
         View flag = getLayoutInflater().inflate(R.layout.flag,
                 /*parent*/ null /*layout*/); //null better if want to create the thing, the mess with other settings before adding to screen
@@ -80,12 +82,17 @@ public class FlagsActivity extends AppCompatActivity {
         //R.drawable.United States
         //int flagImageID = getResources().getIdentifier(countryName, "drawable", getPackageName());
 
-        countryName = countryName.replace(" ","").toLowerCase(); //convert contry names to lower case and remove whitespace
+        String countryName2 = countryName.replace(" ","").toLowerCase(); //convert contry names to lower case and remove whitespace
+        int flagImageID = getResources().getIdentifier(countryName2, "drawable", getPackageName());
 
-        int flagImageID = getResources().getIdentifier(countryName, "drawable", getPackageName());
-
-        ImageView img = (ImageView) flag.findViewById(R.id.flag_image);
+        ImageButton img = (ImageButton) flag.findViewById(R.id.flag_image);
         img.setImageResource(flagImageID);
+        img.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Toast.makeText(FlagsActivity.this, "You clicked " + countryName, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         layout.addView(flag);
 

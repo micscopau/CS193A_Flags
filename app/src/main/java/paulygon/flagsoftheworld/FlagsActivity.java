@@ -1,5 +1,7 @@
 package paulygon.flagsoftheworld;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -13,7 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FlagsActivity extends AppCompatActivity {
+import stanford.androidlib.SimpleActivity;
+
+public class FlagsActivity extends SimpleActivity {
     private static final String[] COUNTRIES = {
             "Australia",
             "Fiji",
@@ -24,42 +28,19 @@ public class FlagsActivity extends AppCompatActivity {
             "USA"
     };
 
+    //instance initializer
+    //runs before any other code (on construction)
+    {
+        setTraceLifecycle(true); //uses the stanford library to allow tracking of onPause, etc.
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flags);
 
-        //add a new button to the screen (using java!)
 
-//        Button bttn = new Button(this);
-//        Button bttn2 = new Button(this);
-//        Button bttn3 = new Button(this);
-//
-//        bttn.setText("My Button");
-//        bttn2.setText("My other button");
-//        bttn3.setText("We don't talk about this button");
-
-        //set button width/height
-        //   note that there are subclasses of
-        //   ViewGroup.LayoutParams
-        //   therefore we can call other functions for formatting
-
-//        //ViewGroup.LayoutParams params = new ViewGroup.LayoutParams( //can also use this line for different functions
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//                ViewGroup.LayoutParams.WRAP_CONTENT /*width*/, ViewGroup.LayoutParams.WRAP_CONTENT /*height*/);
-
-//        bttn.setLayoutParams(params);
-//        bttn2.setLayoutParams(params);
-//        bttn3.setLayoutParams(params);
-//
-//        bttn.setPadding(40,0,30,20); //note these units probably not the same as "sp"
-
-        //LinearLayout layout = (LinearLayout) findViewById(R.id.activity_flags);
         GridLayout layout = (GridLayout) findViewById(R.id.activity_flags);
-
-//        layout.addView(bttn,1); //layout.addView(bttn,1) // sets index location on layout
-//        layout.addView(bttn2);
-//        layout.addView(bttn3);
 
         for (String name: COUNTRIES){
             addFlag(name, layout);
@@ -71,16 +52,13 @@ public class FlagsActivity extends AppCompatActivity {
     private void addFlag(final String countryName, GridLayout layout){
 
         View flag = getLayoutInflater().inflate(R.layout.flag,
-                /*parent*/ null /*layout*/); //null better if want to create the thing, the mess with other settings before adding to screen
+                /*parent*/ null /*layout*/); //null better if want to create the thing, then mess with other settings before adding to screen
 
         //   findViewById(...); // talking to entire chunk
         flag.findViewById(R.id.flag_text); //talking to just small flag
 
         TextView tv = (TextView) flag.findViewById(R.id.flag_text);
         tv.setText(countryName);
-
-        //R.drawable.United States
-        //int flagImageID = getResources().getIdentifier(countryName, "drawable", getPackageName());
 
         String countryName2 = countryName.replace(" ","").toLowerCase(); //convert contry names to lower case and remove whitespace
         int flagImageID = getResources().getIdentifier(countryName2, "drawable", getPackageName());
@@ -90,7 +68,24 @@ public class FlagsActivity extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Toast.makeText(FlagsActivity.this, "You clicked " + countryName, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FlagsActivity.this, "You clicked " + countryName, Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(FlagsActivity.this);
+                builder.setTitle("My Dialog");
+                builder.setMessage("You clicked " + countryName);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        //code to run when OK is pressed
+                        Toast.makeText(FlagsActivity.this, "You clicked OK", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
 

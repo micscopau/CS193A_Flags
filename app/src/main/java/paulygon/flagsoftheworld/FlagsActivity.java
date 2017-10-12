@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,7 +52,8 @@ public class FlagsActivity extends AppCompatActivity {
 //
 //        bttn.setPadding(40,0,30,20); //note these units probably not the same as "sp"
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.activity_flags);
+        //LinearLayout layout = (LinearLayout) findViewById(R.id.activity_flags);
+        GridLayout layout = (GridLayout) findViewById(R.id.activity_flags);
 
 //        layout.addView(bttn,1); //layout.addView(bttn,1) // sets index location on layout
 //        layout.addView(bttn2);
@@ -64,19 +66,19 @@ public class FlagsActivity extends AppCompatActivity {
     }
 
     //countryName = "USA"
-    private void addFlag(String countryName, LinearLayout layout){
+    private void addFlag(String countryName, GridLayout layout){
 
-        View flag = getLayoutInflater().inflate(R.layout.flag, layout);
+        View flag = getLayoutInflater().inflate(R.layout.flag,
+                /*parent*/ null /*layout*/); //null better if want to create the thing, the mess with other settings before adding to screen
 
         //   findViewById(...); // talking to entire chunk
         flag.findViewById(R.id.flag_text); //talking to just small flag
 
         TextView tv = (TextView) flag.findViewById(R.id.flag_text);
-        tv.setText("USA");
+        tv.setText(countryName);
 
         //R.drawable.United States
         //int flagImageID = getResources().getIdentifier(countryName, "drawable", getPackageName());
-
 
         countryName = countryName.replace(" ","").toLowerCase(); //convert contry names to lower case and remove whitespace
 
@@ -85,7 +87,7 @@ public class FlagsActivity extends AppCompatActivity {
         ImageView img = (ImageView) flag.findViewById(R.id.flag_image);
         img.setImageResource(flagImageID);
 
-        //"Fiji" => R.drawable.fiji (int)
+        layout.addView(flag);
 
     }
 }

@@ -10,8 +10,8 @@
     <ImageView
         android:id="@+id/flag_image"
         android:src="@drawable/japan"
-        android:layout_width="100sp"
-        android:layout_height="100sp" />
+        android:layout_width="75sp"
+        android:layout_height="75sp" />
 
     <TextView
         android:id="@+id/flag_text"
